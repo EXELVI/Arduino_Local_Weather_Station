@@ -113,11 +113,11 @@ void loop()
                     if (currentLine.length() == 0)
                     {
                         client.println("<!doctype html>");
-                        client.println("<html lang=\"en\">");
+                        client.println("<html lang=\"en\" data-bs-theme=\"dark\">");
                         client.println("  <head>");
                         client.println("    <meta charset=\"utf-8\">");
                         client.println("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
-                        client.println("    <title>Stazione Meteo Locale</title>");
+                        client.println("    <title>Local Weather Station</title>");
                         client.println("    <link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH\" crossorigin=\"anonymous\">");
                         client.println("    <style>");
                         client.println("      body {");
@@ -138,18 +138,18 @@ void loop()
                         client.println("      <div class=\"row mt-5\">");
                         client.println("        <div class=\"col-md-6\">");
                         client.println("          <h3>AHT20</h3>");
-                        client.println("          <p class=\"data-display\">Temperatura: <span id=\"aht20-temp\">--</span> °C</p>");
-                        client.println("          <p class=\"data-display\">Umidità: <span id=\"aht20-humidity\">--</span> %</p>");
+                        client.println("          <p class=\"data-display\">Temperature: <span id=\"aht20-temp\">--</span> °C</p>");
+                        client.println("          <p class=\"data-display\">Humidity: <span id=\"aht20-humidity\">--</span> %</p>");
                         client.println("        </div>");
                         client.println("        <div class=\"col-md-6\">");
                         client.println("          <h3>BMP280</h3>");
-                        client.println("          <p class=\"data-display\">Temperatura: <span id=\"bmp280-temp\">--</span> °C</p>");
-                        client.println("          <p class=\"data-display\">Pressione: <span id=\"bmp280-pressure\">--</span> hPa</p>");
+                        client.println("          <p class=\"data-display\">Temperature: <span id=\"bmp280-temp\">--</span> °C</p>");
+                        client.println("          <p class=\"data-display\">Pressure: <span id=\"bmp280-pressure\">--</span> hPa</p>");
                         client.println("        </div>");
                         client.println("      </div>");
                         client.println("      <div class=\"row mt-4\">");
                         client.println("        <div class=\"col-md-12 text-center\">");
-                        client.println("          <p class=\"timestamp\">Ultimo aggiornamento: <span id=\"last-update\">--</span></p>");
+                        client.println("          <p class=\"timestamp\">Last Updated: <span id=\"last-update\">--</span></p>");
                         client.println("        </div>");
                         client.println("      </div>");
                         client.println("    </div>");
@@ -202,10 +202,11 @@ void loop()
                             myObject["BMP280"] = BMP280;
 
                             RTC.getTime(currentTime);
-                            myObject["RTC"] = String(currentTime.getUnixTime());
-                          
+                            String currentTimeString = String((unsigned long)currentTime.getUnixTime());
+                            myObject["RTC"] = currentTimeString;
 
                             String jsonString = JSON.stringify(myObject);
+
                             client.println(jsonString);
 
                             break;
